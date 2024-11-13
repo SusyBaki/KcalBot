@@ -1,0 +1,53 @@
+const commands = [
+    {
+        name: 'penis',
+        description: 'cu'
+    },
+    {
+        name: 'e6',
+        description: 'tenha medo desse comando',
+        options: [
+            {
+                name: 'query',
+                description: 'something',
+                type: ApplicationCommandOptionType.String,
+                required: true
+            },
+        ]
+    }
+];
+
+const rest = new REST().setToken(process.env.DC_API_KEY);
+
+(async () => {
+    try {
+        console.log(`Started refreshing ${commands.length} application (/) commands.`);
+
+        const data = await rest.put(
+            Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.SERVER_PAIA),
+            { body: commands },
+        );
+
+        console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+    } catch (error) {
+        console.error(error);
+    }
+})();
+
+client.on(Events.InteractionCreate, async interaction => {
+	if (!interaction.isChatInputCommand()) return;
+
+    if (interaction.commandName === 'e6'){
+        query1 = interaction.options.get('query')
+        console.log(`query1: ${query1.value}`)
+        var options
+        wrapper.E6.nsfw(query1.value, options).then(post => {
+            interaction.reply(`artista: ${post.tags.artist}\ndescrição: ${post.description}\n ${post.file.url}`);
+            console.log(post)
+        })
+    }
+
+	if (interaction.commandName === 'penis') {
+		await interaction.reply('https://tenor.com/view/leorio-leolio-hunter-x-hunter-staring-meme-gif-23113216');
+	}
+});
